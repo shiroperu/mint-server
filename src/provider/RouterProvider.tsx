@@ -6,6 +6,7 @@ import { Create } from '../pages/Create';
 import { Account } from '../pages/Account';
 import { Mint } from '../pages/Mint';
 import { AddItem } from '../pages/AddItem';
+import { CompressedItem } from '../pages/CompressedItem';
 import { getPath } from '../utils';
 import { UmiTest } from "../pages/UmiTest";
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: getPath.account(':id'), element: <Account /> },
       { path: getPath.mint(':id'), element: <Mint /> },
       { path: getPath.addItem(':id'), element: <AddItem /> },
+      { path: getPath.compressedItem(':id'), element: <CompressedItem /> },
       { path: getPath.umiTest(), element: <UmiTest /> },
       // { path: '*', element: <Page404 /> },
     ],

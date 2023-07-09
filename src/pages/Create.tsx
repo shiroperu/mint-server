@@ -39,7 +39,7 @@ import { getPath } from '../utils';
 import styles from "./Create.module.css";
 
 
-async function uploadAndCreateNft(umi: Umi, name: string, file: File) {
+async function uploadAndCreateNft(umi: Umi, name: string, file: File, items: number) {
   // Ensure input is valid.
   if (!name) {
     throw new Error("Please enter a name for your NFT.");
@@ -94,7 +94,7 @@ console.log('collectionMint: ',collectionUpdateAuthority);
     collectionUpdateAuthority,
     tokenStandard: TokenStandard.NonFungible,
     sellerFeeBasisPoints,
-    itemsAvailable: 1, // Increase SOL cost per items. Check the cost on Devnet before launch.
+    itemsAvailable: items, // Increase SOL cost per items. Check the cost on Devnet before launch.
     maxEditionSupply: 30,
     creators: [
       {
@@ -150,10 +150,10 @@ export function Create() {
         setLoading(true);
 
         const formData = new FormData(event.target as HTMLFormElement);
-        const data = Object.fromEntries(formData) as { collection: string; name: string; image: File };
+        const data = Object.fromEntries(formData) as { collection: string; name: string; image: File, items: string };
 
         try {
-          const mint = await uploadAndCreateNft(umi, data.name, data.image);
+          const mint = await uploadAndCreateNft(umi, data.name, data.image, Number(data.items));
           setMintCreated(mint);
         } finally {
           setLoading(false);
@@ -291,6 +291,10 @@ export function Create() {
         <label className={styles.field}>
           <span>Image</span>
           <input name="image" type="file" />
+        </label>
+        <label className={styles.field}>
+          <span>Number of items</span>
+          <input name="items" defaultValue="1" />
         </label>
         <button type="submit">
           <span>Create NFT</span>
